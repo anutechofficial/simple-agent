@@ -31,7 +31,7 @@ async function main() {
   const messages: any[] = [
     {
       role: "user",
-      content: "Create a user named Anurag",
+      content: "Create a user named Anurag, then get the weather for Varanasi. and give me the id of the user created",
     },
   ];
 
@@ -50,10 +50,7 @@ async function main() {
       messages: messages,
       tools: tools,
       tool_choice: "auto",
-    });
-
-    console.log('response', response);
-    
+    });    
 
     const responseMessage: any = response.choices[0].message;
     messages.push(responseMessage);
