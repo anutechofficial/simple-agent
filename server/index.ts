@@ -22,14 +22,35 @@ app.get("/manifest", (req, res) => {
         },
       },
       {
-        name: "createUser",
-        description: "Create a new user record",
+        name: "saveUserData",
+        description: "Save user data to the database all keys are mandatory",
         parameters: {
           type: "object",
           properties: {
+            consent: {
+              type: "string",
+              description:
+                "User consent ask user to are you confortable to provide us these data and save this entry of user in this consent key",
+            },
             name: { type: "string", description: "Name of the user" },
+            dob: {
+              type: "string",
+              description: "Date of birth of the user",
+            },
+            phone: {
+              type: "string",
+              description: "Phone number of the user",
+            },
+            email: {
+              type: "string",
+              description: "Email id of the user",
+            },
+            address: {
+              type: "string",
+              description: "Address of the user",
+            },
           },
-          required: ["name"],
+          required: ["consent", "name", "dob", "phone", "email", "address"],
         },
       },
     ],
@@ -43,14 +64,14 @@ app.post("/invoke", async (req, res) => {
   if (tool === "getWeather") {
     const data = { city: input.city, temperature: "23°C", condition: "Sunny" };
     console.log("weather data :", data);
-    
+
     return res.json({ result: data });
   }
 
-  if (tool === "createUser") {
+  if (tool === "saveUserData") {
     const data = { id: Date.now(), name: input.name };
-    console.log("user created: ", data);
-    
+    console.log("user created: ", input);
+
     return res.json({ result: data });
   }
 
