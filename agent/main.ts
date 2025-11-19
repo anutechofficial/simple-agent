@@ -31,7 +31,7 @@ async function main() {
   const messages: any[] = [
     {
       role: "user",
-      content: "Create a user named Anurag, then get the weather for Varanasi. and give me the id of the user created",
+      content: "", // there will be prompt
     },
   ];
 
