@@ -25,7 +25,10 @@ async function main() {
     },
   }));
 
-  console.log("🤖 Agent initialized with tools:", tools.map((t: any) => t.function.name));
+  console.log(
+    "🤖 Agent initialized with tools:",
+    tools.map((t: any) => t.function.name)
+  );
 
   // Step 3: Start conversation
   const messages: any[] = [
@@ -50,23 +53,27 @@ async function main() {
       messages: messages,
       tools: tools,
       tool_choice: "auto",
-    });    
+    });
 
     const responseMessage: any = response.choices[0].message;
     messages.push(responseMessage);
 
     // Check if the model wants to call tools
     if (responseMessage.tool_calls && responseMessage.tool_calls.length > 0) {
-      console.log(`🔧 Model requested ${responseMessage.tool_calls.length} tool call(s)`);
+      console.log(
+        `🔧 Model requested ${responseMessage.tool_calls.length} tool call(s)`
+      );
 
       // Execute each tool call
       for (const toolCall of responseMessage.tool_calls) {
         const functionName = toolCall.function.name;
         const functionArgs = JSON.parse(toolCall.function.arguments);
 
-        console.log(`  → Calling: ${functionName}(${JSON.stringify(functionArgs)})`);
+        console.log(
+          `  → Calling: ${functionName}(${JSON.stringify(functionArgs)})`
+        );
 
-        // Call your MCP server 
+        // Call your MCP server
         const res = await fetch("http://localhost:3000/invoke", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
