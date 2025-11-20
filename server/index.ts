@@ -11,28 +11,25 @@ app.get("/manifest", (req, res) => {
   res.json({
     tools: [
       {
-        name: "getWeather",
-        description: "Get current weather for a given city",
-        parameters: {
-          type: "object",
-          properties: {
-            city: { type: "string", description: "Name of the city" },
-          },
-          required: ["city"],
-        },
-      },
-      {
         name: "saveUserData",
-        description: "Save user data to the database all keys are mandatory",
+        description:
+          "With this tool user can share there information like name as name, date of birth as dob, phone number as phone, email id as email, there address location where they live as address, You have to go one by one like first ask user for there consent then name then dob etc. once you collect all the data which is specified by agent like [name, address], or [name, address, phone] or all then you can invoke this tool to save data. If the user provided content has the words like skip or continue or next question, etc., give collected information as skipped like name [skipped], dob [skipped] etc.",
         parameters: {
           type: "object",
           properties: {
+            sessionId: {
+              type: "string",
+              description: "sessionId (uuid) of this convertation session",
+            },
             consent: {
               type: "string",
-              description:
-                "User consent ask user to are you confortable to provide us these data and save this entry of user in this consent key",
+              description: "User affirmative consent like yes or I agree, etc.",
             },
-            name: { type: "string", description: "Name of the user" },
+            name: {
+              type: "string",
+              description:
+                "full name of the user, if name feels not complete ask user for there full name",
+            },
             dob: {
               type: "string",
               description: "Date of birth of the user",
@@ -50,7 +47,7 @@ app.get("/manifest", (req, res) => {
               description: "Address of the user",
             },
           },
-          required: ["consent", "name", "dob", "phone", "email", "address"],
+          required: ["sessionId", "consent"],
         },
       },
     ],
